@@ -73,19 +73,6 @@ docs/           ERS, cobertura, guion y capturas
 | ----------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------- |
 | ![Inicio](docs/capturas/home-desktop.png) | ![Productos tablet](docs/capturas/productos-tablet.png) | ![Productos móvil](docs/capturas/productos-movil.png) |
 
-## Publicación en GitHub Pages
-
-1. Sube el proyecto a GitHub (rama `main`).
-2. **Settings → Pages → Source: GitHub Actions**.
-3. Cada `push` ejecuta pruebas, compila y publica (`.github/workflows/deploy.yml`).
-
-```bash
-git init && git add . && git commit -m "feat: frontend React con Bootstrap y pruebas Jasmine/Karma"
-git branch -M main
-git remote add origin https://github.com/<tu-usuario>/level-up-gamer.git
-git push -u origin main
-```
-
 ## Documentación
 
 - `docs/ERS_Level-Up-Gamer_v2.docx`
