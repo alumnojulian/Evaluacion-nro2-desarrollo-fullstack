@@ -24,6 +24,16 @@ export default function SessionBar() {
         Hola, {usuario.nombre} · Nivel {nivel.nivel} {nivel.nombre} · {usuario.puntos || 0} pts
       </span>
       <span aria-hidden="true">|</span>
+      {!esPersonalInterno(usuario) && (
+        <>
+          <span title="Compártelo: ganas 100 puntos LevelUp por cada amigo que se registre con él">
+            Tu código de referido: <strong data-testid="codigo-referido">{usuario.codigoReferido}</strong>
+          </span>
+          <span aria-hidden="true">|</span>
+        </>
+      )}
+      <Link to="/mis-pedidos">Mis pedidos</Link>
+      <span aria-hidden="true">|</span>
       {esPersonalInterno(usuario) && (
         <>
           <Link to="/admin">Panel de administración</Link>

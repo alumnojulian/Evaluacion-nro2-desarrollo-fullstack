@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Productos from './pages/Productos';
 import DetalleProducto from './pages/DetalleProducto';
 import Carrito from './pages/Carrito';
+import MisPedidos from './pages/MisPedidos';
 import Registro from './pages/Registro';
 import Login from './pages/Login';
 import Nosotros from './pages/Nosotros';
@@ -31,6 +32,7 @@ export default function App() {
         <Route path="productos" element={<Productos />} />
         <Route path="producto/:codigo" element={<DetalleProducto />} />
         <Route path="carrito" element={<Carrito />} />
+        <Route path="mis-pedidos" element={<MisPedidos />} />
         <Route path="registro" element={<Registro />} />
         <Route path="login" element={<Login />} />
         <Route path="nosotros" element={<Nosotros />} />

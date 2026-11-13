@@ -1,7 +1,7 @@
 import { PRODUCTOS_INICIALES } from '../data/productos';
 import {
   CLAVE_PRODUCTOS, buscarProducto, eliminarProducto, estadoStock, filtrarProductos, getMensajes, getOrdenes,
-  getProductos, guardarMensaje, guardarOrdenes, guardarProducto, restablecerDatosDemo, suscribirNewsletter,
+  getOrdenesDeUsuario, getProductos, guardarMensaje, guardarOrdenes, guardarProducto, restablecerDatosDemo, suscribirNewsletter,
 } from './store';
 import { LS } from './storage';
 
@@ -74,6 +74,18 @@ describe('store: órdenes, mensajes, newsletter y reinicio', () => {
     expect(getOrdenes()).toEqual([]);
     guardarOrdenes([{ id: 'LUG-0001' }]);
     expect(getOrdenes()).toEqual([{ id: 'LUG-0001' }]);
+  });
+  it('getOrdenesDeUsuario devuelve solo las órdenes de ese correo, la más reciente primero', () => {
+    guardarOrdenes([
+      { id: 'LUG-0001', correo: 'cliente@gmail.com' },
+      { id: 'LUG-0002', correo: 'otro@duoc.cl' },
+      { id: 'LUG-0003', correo: 'cliente@gmail.com' },
+      { id: 'LUG-0004' },
+    ]);
+    expect(getOrdenesDeUsuario(' Cliente@Gmail.com ').map((o) => o.id)).toEqual(['LUG-0003', 'LUG-0001']);
+    expect(getOrdenesDeUsuario('nadie@duoc.cl')).toEqual([]);
+    expect(getOrdenesDeUsuario('')).toEqual([]);
+    expect(getOrdenes().map((o) => o.id)).toEqual(['LUG-0001', 'LUG-0002', 'LUG-0003', 'LUG-0004']);
   });
   it('guarda mensajes de contacto normalizados', () => {
     guardarMensaje({ nombre: ' Ana ', correo: 'ANA@Duoc.cl ', comentario: ' Hola ' });

@@ -51,9 +51,14 @@ export default function Carrito() {
             Tu orden <strong data-testid="numero-orden">{orden.id}</strong> por <strong>{formatoCLP(orden.total)}</strong> quedó registrada como pendiente. El pago es
             simulado en esta entrega.
           </p>
-          <Link className="btn btn-primary" to="/productos">
-            Seguir comprando
-          </Link>
+          <div className="d-flex flex-wrap justify-content-center gap-2">
+            <Link className="btn btn-primary" to="/mis-pedidos">
+              Ver mis pedidos
+            </Link>
+            <Link className="btn btn-outline-light" to="/productos">
+              Seguir comprando
+            </Link>
+          </div>
         </section>
       </div>
     );

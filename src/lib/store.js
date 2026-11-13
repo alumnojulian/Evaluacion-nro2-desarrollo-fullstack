@@ -60,6 +60,15 @@ export function guardarOrdenes(ordenes) {
   return LS.set(CLAVE_ORDENES, ordenes);
 }
 
+/* Historial de un cliente: sus órdenes (por correo), de la más reciente a la más antigua */
+export function getOrdenesDeUsuario(correo) {
+  const c = String(correo || '').trim().toLowerCase();
+  if (!c) return [];
+  return getOrdenes()
+    .filter((o) => String(o.correo || '').toLowerCase() === c)
+    .reverse();
+}
+
 export function getMensajes() {
   return LS.get(CLAVE_MENSAJES, []);
 }

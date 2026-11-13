@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react';
+import { cleanup, fireEvent, render } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
 import SiteNavbar from './SiteNavbar';
 import SessionBar from './SessionBar';
@@ -46,6 +46,17 @@ describe('SessionBar', () => {
     const { ui } = renderApp(<SessionBar />);
     expect(ui.getByText(/Hola, Camila · Nivel 1 Novato · 0 pts/)).toBeTruthy();
     expect(ui.queryByText('Panel de administración')).toBeNull();
+  });
+  it('un cliente ve su código de referido; el personal interno no', () => {
+    conSesion('cliente@gmail.com');
+    expect(renderApp(<SessionBar />).ui.getByTestId('codigo-referido').textContent).toBe('LUPCAMIL');
+    cleanup();
+    conSesion('admin@duoc.cl');
+    expect(renderApp(<SessionBar />).ui.queryByTestId('codigo-referido')).toBeNull();
+  });
+  it('con sesión ofrece el enlace a Mis pedidos', () => {
+    conSesion('cliente@gmail.com');
+    expect(renderApp(<SessionBar />).ui.getByText('Mis pedidos').getAttribute('href')).toBe('/mis-pedidos');
   });
   it('el administrador ve el enlace al panel', () => {
     conSesion('admin@duoc.cl');

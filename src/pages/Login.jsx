@@ -10,6 +10,7 @@ import { sugerirCorreo, validarCorreo, validarPassword } from '../lib/validators
 const AVISOS = {
   acceso: 'Para entrar al panel necesitas iniciar sesión con una cuenta de Administrador o Vendedor.',
   pago: 'Inicia sesión para terminar tu compra. Tu carrito se mantiene guardado.',
+  pedidos: 'Inicia sesión para ver el historial de tus pedidos.',
 };
 
 const REGLAS = { correo: (v) => validarCorreo(v), password: (v) => validarPassword(v) };

@@ -7,6 +7,7 @@ Asignatura **DSY1104 – Desarrollo Fullstack II** (DUOC UC), Evaluación Parcia
 
 - Catálogo de 12 productos en 10 categorías, con filtros (categoría, texto, precio máximo, orden) y alertas de stock crítico/agotado.
 - Carrito persistente, cupones `LEVELUP10` (10 %) y `GAMER5000` ($5.000 desde $50.000), descuento Duoc 20 % de por vida (no acumulable: se aplica el mayor) y pago simulado con órdenes `LUG-000N`.
+- Historial "Mis pedidos" para cada usuario con sesión (`/mis-pedidos`): sus órdenes con fecha, total, estado y detalle. La barra de sesión muestra al cliente su nivel, puntos y código de referido.
 - Registro con validación (RUN módulo 11, mayor de 18, correos permitidos con sugerencia, región/comuna dependientes), referidos (+100 puntos) y niveles Novato/Jugador/Veterano/Leyenda.
 - Login con roles **Administrador / Vendedor / Cliente** y rutas protegidas.
 - Panel de administración: dashboard, productos (CRUD con imagen ≤ 300 KB), usuarios (solo administrador) y órdenes.
@@ -46,8 +47,8 @@ npm test
 npm run test:watch
 ```
 
-- Resultado: `Executed 247 of 247 SUCCESS`.
-- Cobertura: **99,48 %** sentencias · **95,21 %** ramas · **99,35 %** funciones · **99,49 %** líneas (`coverage/index.html`).
+- Resultado: `Executed 254 of 254 SUCCESS`.
+- Cobertura: **99,48 %** sentencias · **95,28 %** ramas · **99,36 %** funciones · **99,5 %** líneas (`coverage/index.html`).
 - Si Chrome está en otra ruta: `CHROME_BIN` (Windows: `set CHROME_BIN=C:\Program Files\Google\Chrome\Application\chrome.exe`).
 - Mocks: `spyOn(Storage.prototype, …)`, `spyOn(Math, 'random')`, `jasmine.createSpy`, `jasmine.clock()`, `MemoryRouter`.
 

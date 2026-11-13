@@ -4,6 +4,7 @@ import Home from './Home';
 import Productos from './Productos';
 import DetalleProducto from './DetalleProducto';
 import Carrito from './Carrito';
+import MisPedidos from './MisPedidos';
 import Registro from './Registro';
 import Login from './Login';
 import Contacto from './Contacto';
@@ -188,6 +189,50 @@ describe('Carrito', () => {
     expect(getOrdenes()[0].total).toBe(99980);
     expect(buscarProducto('MS001').stock).toBe(38);
     expect(JSON.parse(localStorage.getItem('lug_carrito'))).toEqual([]);
+  });
+  it('después de pagar, "Ver mis pedidos" muestra la orden recién creada en el historial', () => {
+    conSesion('cliente@gmail.com');
+    conProductos();
+    const { ui } = renderApp(<Carrito />, { path: '/carrito', ruta: '/carrito', extra: <Route path="/mis-pedidos" element={<MisPedidos />} /> });
+    fireEvent.click(ui.getByText('Pagar'));
+    fireEvent.click(ui.getByText('Ver mis pedidos'));
+    expect(ui.getByRole('heading', { name: 'Mis pedidos' })).toBeTruthy();
+    expect(ui.getByTestId('conteo-pedidos').textContent).toBe('1 pedido');
+    expect(ui.getByText('LUG-0001')).toBeTruthy();
+    expect(ui.getByText('2 × Mouse Gamer Logitech G502 HERO')).toBeTruthy();
+  });
+});
+
+describe('MisPedidos', () => {
+  const montar = () =>
+    renderApp(<MisPedidos />, { path: '/mis-pedidos', ruta: '/mis-pedidos', extra: <Route path="/login" element={<Login />} /> });
+  const orden = (id, correo, fecha, total) => ({
+    id, correo, fecha, cliente: 'X', items: [{ codigo: 'MS001', nombre: 'Mouse', precio: total, cantidad: 1 }], subtotal: total, descuento: 0, total, estado: 'Pendiente',
+  });
+
+  it('sin sesión redirige al login con el aviso de pedidos', () => {
+    const { ui } = montar();
+    expect(ui.getByText('Inicia sesión para ver el historial de tus pedidos.')).toBeTruthy();
+  });
+  it('un cliente sin compras ve el aviso y el enlace al catálogo', () => {
+    conSesion('cliente@gmail.com');
+    const { ui } = montar();
+    expect(ui.getByText(/Aún no tienes pedidos/)).toBeTruthy();
+    expect(ui.getByText('Ver productos').getAttribute('href')).toBe('/productos');
+  });
+  it('lista solo los pedidos del cliente, del más reciente al más antiguo', () => {
+    LS.set('lug_ordenes', [
+      orden('LUG-0001', 'cliente@gmail.com', '2026-01-01T10:00:00.000Z', 1000),
+      orden('LUG-0002', 'alumno@duoc.cl', '2026-01-02T10:00:00.000Z', 2000),
+      orden('LUG-0003', 'cliente@gmail.com', '2026-01-03T10:00:00.000Z', 3000),
+    ]);
+    conSesion('cliente@gmail.com');
+    const { ui, container } = montar();
+    expect(ui.getByTestId('conteo-pedidos').textContent).toBe('2 pedidos');
+    const ids = Array.from(container.querySelectorAll('tbody tr td:first-child')).map((td) => td.textContent);
+    expect(ids).toEqual(['LUG-0003', 'LUG-0001']);
+    expect(ui.getByText('$3.000')).toBeTruthy();
+    expect(ui.getAllByText('Pendiente').length).toBe(2);
   });
 });
 

@@ -1,3 +1,4 @@
+import DetalleOrden from '../../components/DetalleOrden';
 import { fechaLegible, formatoCLP, pluralizar } from '../../lib/format';
 import { getOrdenes } from '../../lib/store';
 
@@ -38,17 +39,7 @@ export default function Ordenes() {
                     <span className="badge text-bg-info">{o.estado}</span>
                   </td>
                   <td>
-                    <details>
-                      <summary>Ver {pluralizar(o.items.length, 'producto', 'productos')}</summary>
-                      <ul className="mt-2 ps-3 mb-0">
-                        {o.items.map((i) => (
-                          <li key={i.codigo}>
-                            {i.cantidad} × {i.nombre} <span className="text-body-secondary">({formatoCLP(i.precio)} c/u)</span>
-                          </li>
-                        ))}
-                        {o.descuento > 0 && <li className="text-body-secondary">Descuento aplicado: −{formatoCLP(o.descuento)}</li>}
-                      </ul>
-                    </details>
+                    <DetalleOrden orden={o} />
                   </td>
                 </tr>
               ))
