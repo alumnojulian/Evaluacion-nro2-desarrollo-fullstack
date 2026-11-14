@@ -1,5 +1,6 @@
 // Configuración de Karma + Jasmine para probar componentes React (con cobertura de código)
-process.env.CHROME_BIN = process.env.CHROME_BIN || '/usr/bin/google-chrome';
+// En Linux (GitHub Actions) se usa la ruta estándar; en Windows y macOS karma-chrome-launcher detecta Chrome solo
+if (!process.env.CHROME_BIN && process.platform === 'linux') process.env.CHROME_BIN = '/usr/bin/google-chrome';
 
 const path = require('path');
 

@@ -49,7 +49,7 @@ npm run test:watch
 
 - Resultado: `Executed 254 of 254 SUCCESS`.
 - Cobertura: **99,48 %** sentencias · **95,28 %** ramas · **99,36 %** funciones · **99,5 %** líneas (`coverage/index.html`).
-- Si Chrome está en otra ruta: `CHROME_BIN` (Windows: `set CHROME_BIN=C:\Program Files\Google\Chrome\Application\chrome.exe`).
+- Karma detecta Chrome automáticamente en Windows y macOS (en Linux usa `/usr/bin/google-chrome`). Si está en otra ruta, define `CHROME_BIN` (PowerShell: `$env:CHROME_BIN="C:\ruta\a\chrome.exe"`).
 - Mocks: `spyOn(Storage.prototype, …)`, `spyOn(Math, 'random')`, `jasmine.createSpy`, `jasmine.clock()`, `MemoryRouter`.
 
 ## Estructura
